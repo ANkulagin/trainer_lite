@@ -1,8 +1,10 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
+const APP_PATH = __DIR__;
 
-$routes = require __DIR__ . '/config/routes.php';
+require_once APP_PATH . '/vendor/autoload.php';
 
-$uri = $_SERVER['REQUEST_URI'];
-$routes[$uri]();
+use App\App;
+$app = new App();
+$app->run();
+

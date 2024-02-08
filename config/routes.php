@@ -1,6 +1,10 @@
 <?php
+
+use App\Controllers\HomeController;
+use App\Controllers\TrainerController;
+use App\Router\Route;
 return [
-    '/home' => function () {
-        echo '<h1>Home page</h1>';
-    },
+    Route::get('/home',[HomeController::class,'index']),
+    Route::get('/trainer',[TrainerController::class,'index']),
+
 ];
