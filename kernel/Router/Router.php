@@ -2,13 +2,16 @@
 
 namespace App\Kernel\Router;
 
+use App\Kernel\Http\Request;
+use App\Kernel\View\View;
+
 class Router
 {
     private array $routes=[
         'GET' => [],
         'POST' => [],
     ];
-    public function __construct()
+    public function __construct(private View $view,private Request $request)
     {
         $this->initRoutes();
     }
@@ -20,7 +23,12 @@ class Router
         }
         if(is_array($route->getAction())){
            [$controller,$action] = $route->getAction();
+            /**
+             * @var $controller
+             */
            $controller = new $controller();
+           $controller->setView($this->view);
+           $controller->setRequest($this->request);
            $controller->$action();
         }
         else{
