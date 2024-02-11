@@ -46,4 +46,8 @@ class Request
     {
         return $this->post[$key] ?? $this->get[$key] ?? $default;
     }
+    public function errors():array
+    {
+        return $this->validator->errors();
+    }
 }

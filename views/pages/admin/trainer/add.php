@@ -1,6 +1,7 @@
 <?php
 /*
  * @var \App\Kernel\View\View $view
+ * @var \App\Kernel\Session\Session $session
  */
 ?>
 <?php $view->component('start')?>
@@ -10,6 +11,14 @@
     <div>
         <input type="text" name="name">
     </div>
+    <?php if ($session->has('errors')): ?>
+        <ul style="color: red;">
+            <?php foreach ($session->getFlash('errors') as $field => $errors): ?>
+                <li><?= ucfirst($field) ?>: <?= implode(', ', $errors) ?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+
     <div>
         <button>add</button>
     </div>

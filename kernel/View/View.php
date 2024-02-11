@@ -3,9 +3,17 @@
 namespace App\Kernel\View;
 
 use App\Kernel\Exceptions\ViewNotFoundException;
+use App\Kernel\Session\Session;
 
 class View
 {
+   public function __construct(
+       private Session $session
+   )
+   {
+
+   }
+
     public function page(string $name):void
     {
 
@@ -13,9 +21,7 @@ class View
         if (!file_exists($viewPath)) {
             throw new ViewNotFoundException('View not found: ' . $viewPath);
         }
-        extract([
-            'view'=>$this
-        ]);
+        extract($this->defaultData());
         include_once $viewPath;
     }
 
@@ -26,5 +32,12 @@ class View
             throw new ViewNotFoundException('View not found: ' . $componentPath);
         }
         include_once $componentPath;
+    }
+    private function defaultData():array
+    {
+        return [
+            'view'=>$this,
+            'session'=>$this->session,
+        ];
     }
 }
